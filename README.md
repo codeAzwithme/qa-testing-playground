@@ -1,6 +1,6 @@
 # QA Testing Playground
 
-A collection of QA resources, reusable prompt templates, sample test artifacts, and a runnable Selenium + Java + TestNG example for the Salesforce login page.
+A collection of QA resources, reusable prompt templates, sample test artifacts, a runnable Selenium + Java + TestNG example for the Salesforce login page, and a Rest Assured + Java + TestNG framework for the RESTful Booker API.
 
 ## Repository contents
 
@@ -32,6 +32,20 @@ A Maven project that automates the Salesforce login page at `https://login.sales
 - `testng.xml` — TestNG suite that runs the valid- and invalid-login test classes.
 - `pom.xml` — Maven dependencies, Java compiler settings, and Surefire/TestNG configuration.
 - `SeleniumFrameworkPrompt.md` — prompt used as framework-generation guidance. `SKILL.md` is a copy of the RICE-POT test-case skill for reference.
+
+### `Project Task/`
+
+`RestAssured_API_Testing_Framework_UsingJava/` is a Maven project that automates the RESTful Booker API at `https://restful-booker.herokuapp.com` with Rest Assured, TestNG, and Jackson. Its `prompt.md` is the RICE-POT prompt the framework was built from, and `prompt_with_antihallucinatory_rule.md` adds the rule that every assertion must trace to the provided API documentation.
+
+- `src/main/java/com/restfulbooker/automation/specs/BaseSpec.java` — request and response spec builders: base URI, JSON headers, token-cookie and Basic auth, status/response-time/content-type checks, and request/response logging when a validation fails.
+- `src/main/java/com/restfulbooker/automation/clients/` — `AuthApi`, `BookingApi`, and `PingApi` endpoint clients built on a spec-bound `BaseApi`.
+- `src/main/java/com/restfulbooker/automation/models/` — Jackson POJOs: `Auth`, `AuthResponse`, `Booking`, `BookingDates`, and `CreateBookingResponse`.
+- `src/main/java/com/restfulbooker/automation/config/ConfigManager.java` and `src/main/resources/config.properties` — base URI, admin credentials, and response-time limit, each overridable with a `-D` property.
+- `src/main/java/com/restfulbooker/automation/utils/BookingDataFactory.java` — fixed booking payloads: the create example from the API documentation, a replacement, and the documented partial-update example.
+- `src/test/java/com/restfulbooker/automation/tests/` — `BaseTest` (clients, token, cleanup of created bookings) plus `PingTest`, `AuthTest`, `CreateBookingTest`, `GetBookingTest`, `UpdateBookingTest`, `PartialUpdateBookingTest`, `DeleteBookingTest`, and the chained `BookingE2ETest`.
+- `src/test/resources/schemas/` — JSON schemas for the token, booking, create-booking response, and booking id list.
+- `testng.xml` and `pom.xml` — suite definition, dependencies, and Surefire configuration.
+- `api_test_cases_summary.md` — class-by-class list of the 22 API test cases and where they live.
 
 ### `Test Data/`
 
@@ -77,6 +91,39 @@ mvn clean test "-Dsf.user=YOUR_SALESFORCE_USERNAME" "-Dsf.pass=YOUR_SALESFORCE_P
 
 Use an account you are authorized to test. Do not commit credentials or place real credentials in source files. Command-line arguments may be retained in shell history or visible to other local processes; use this approach only in an appropriately secured environment.
 
+## Rest Assured API framework setup
+
+### Prerequisites
+
+- Java Development Kit (JDK) 17 or later.
+- Apache Maven 3.6 or later, available on `PATH`.
+- Network access to `https://restful-booker.herokuapp.com`.
+
+The project uses Rest Assured 5.5.7, TestNG 7.10.2, Jackson 2.19.4, and Maven Surefire 3.2.5, compiled for Java 17.
+
+### Run the test suite
+
+From the repository root in PowerShell:
+
+```powershell
+cd "Project Task/RestAssured_API_Testing_Framework_UsingJava"
+mvn clean test
+```
+
+The suite runs 22 tests in about one minute. To run a single class:
+
+```powershell
+mvn test "-Dtest=BookingE2ETest"
+```
+
+Defaults live in `src/main/resources/config.properties`. Override any of them with Maven user properties:
+
+```powershell
+mvn clean test "-Dbase.uri=https://restful-booker.herokuapp.com" "-Dmax.response.time.ms=3000"
+```
+
+Supported properties: `base.uri`, `auth.username`, `auth.password`, and `max.response.time.ms`. The admin credentials in `config.properties` are the public sandbox credentials from the RESTful Booker documentation; do not replace them with real credentials in source files.
+
 ## Test scope and notes
 
 - The login page object uses XPath locators and explicit waits; the driver factory configures a five-second implicit wait and a 40-second page-load timeout.
@@ -84,6 +131,10 @@ Use an account you are authorized to test. Do not commit credentials or place re
 - Invalid-login tests check the observed error-message text fragments. Because these tests exercise a live external page, Salesforce UI, anti-automation controls, or error wording changes may affect results.
 - The Restful Booker Markdown suite distinguishes documented behavior from inferred expectations. Review inferred cases with the API owner before treating them as requirements.
 - Example credentials or values appearing in sample API documentation are test examples, not credentials for this Selenium framework.
+- The Rest Assured tests create their own booking from fixed payloads and delete it in `BaseTest` teardown, so they do not depend on seed data in the shared RESTful Booker sandbox.
+- Every Rest Assured assertion traces to the Restful Booker API documentation (`Test Data/Restful-booker.pdf`) or the framework prompt, and each test `description` names the documentation section it checks. Behavior the documentation does not state is not asserted: failure responses for missing or invalid credentials, unknown booking ids, and invalid payloads; the response bodies of `/ping` and DELETE; and any response-time limit.
+- The `checkin`/`checkout` list filters are documented but not automated: when checked against the live API they did not follow the documented greater-than-or-equal comparison.
+- `max.response.time.ms` (default 8000) is a configurable ceiling chosen for this framework, not a documented API limit.
 
 ## Working with the RICE-POT resources
 
