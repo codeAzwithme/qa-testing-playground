@@ -14,6 +14,8 @@ Reusable prompt and reference material:
 - `Rice Pot SKILL for Tc gen.md` — RICE-POT prompt-builder guidance.
 - `RICE-POT-TestCase-Prompt.md.pdf` — exported RICE-POT test-case prompt reference.
 - `SeleniumFrameworkPrompt.md` — prompt for generating a Selenium login automation framework.
+- `Rest_assured_framework_java_prompt_with_antihallucinatory_rule.md` — RICE-POT prompt for generating the RESTful Booker Rest Assured framework under anti-hallucination rules: only documented facts, "Insufficient information to determine." for gaps, every assertion traceable to the API documentation, and a Verified Facts / Missing Information / Generated Output / Self-Validation output format.
+- `TestPlanGeneratorPrompt.md` — prompt for generating a Test Plan from a PRD, following the format of a reference Test Plan document.
 
 ### `Prompt Engineering/`
 
@@ -47,9 +49,24 @@ A Maven project that automates the Salesforce login page at `https://login.sales
 - `testng.xml` and `pom.xml` — suite definition, dependencies, and Surefire configuration.
 - `api_test_cases_summary.md` — class-by-class list of the 22 API test cases and where they live.
 
+`Test Plan Generator/` holds the inputs and the result of generating a Test Plan from a PRD:
+
+- `TestPlanGeneratorPrompt.md` — a copy of the template in `All templates/`. Follow its "How to use this prompt" steps: upload a reference Test Plan document and the PRD PDF, then paste the prompt.
+- `Product Requirements Document (PRD) VWO.com.pdf` — the PRD the prompt is run against.
+- `Test Plan - VWO.docx` — the generated Test Plan for that PRD (17 pages). It follows the section order and tables of `Test Data/Test Plan - Template.docx`: Objective, Scope with Inclusions, Test Environments, Defect Reporting Procedure, Test Strategy, Test Schedule, Test Deliverables, Entry and Exit Criteria, Tools, Risks and Mitigations, and Approvals. As the prompt requires, it adds an Assumptions, Gaps and Open Questions section (20 gaps, rated testable or not as written where that applies) and a Requirements Traceability Matrix covering FR1–FR9, the five non-functional requirements, and the two user flows. Dates, environment URLs, and owners are marked TBD because the PRD does not provide them.
+
 ### `Test Data/`
 
-Convenience copies of the Restful Booker API reference PDF, VWO login PRD PDF, and VWO login test-case workbook. Related copies are also kept beside the prompt-engineering examples that use them.
+Reference documents and convenience copies. Related copies are also kept beside the prompt-engineering examples and tasks that use them.
+
+- `Restful-booker.pdf` — Restful Booker API reference (apidoc export).
+- `VWO-Login-PRD.pdf` and `VWO-Login-TestCases.xlsx` — VWO login PRD and its sample test-case workbook.
+- `Product Requirements Document (PRD) VWO.com.pdf` — PRD for the VWO platform: product overview, business objectives, target users, and core features. It is also the input in `Project Task/Test Plan Generator/`.
+- `App VWO Login - API Documention - Requirment.docx` — requirements for the VWO login API: objective, endpoint, request payload, headers, and response samples.
+- `VWO Project Requirement API Testing ( HLR).docx` — high-level requirements for testing the VWO login and registration APIs.
+- `Test Plan - Restful Booker ATB12x.docx` — Test Plan for the Restful Booker API: objective, scope, test environments, strategy, schedule, entry and exit criteria, risks, and approvals.
+- `Test Plan - Template.docx` — Test Plan reference format with the same section structure.
+- `Test cases - Ultimate _ TheTestingAcademy.xlsx` — 14-sheet test-case workbook: a project test-case template, Restful Booker API sheets (health check, token, booking CRUD, integration scenarios), SOAP UI sheets, and an `App.vwo.co` sheet.
 
 ### `.claude/skills/`
 
