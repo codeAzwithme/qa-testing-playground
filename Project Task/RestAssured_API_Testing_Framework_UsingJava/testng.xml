@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RestfulBookerApiSuite" verbose="2">
+    <test name="HealthAndAuthTests">
+        <classes>
+            <class name="com.restfulbooker.automation.tests.PingTest"/>
+            <class name="com.restfulbooker.automation.tests.AuthTest"/>
+        </classes>
+    </test>
+    <test name="BookingTests">
+        <classes>
+            <class name="com.restfulbooker.automation.tests.CreateBookingTest"/>
+            <class name="com.restfulbooker.automation.tests.GetBookingTest"/>
+            <class name="com.restfulbooker.automation.tests.UpdateBookingTest"/>
+            <class name="com.restfulbooker.automation.tests.PartialUpdateBookingTest"/>
+            <class name="com.restfulbooker.automation.tests.DeleteBookingTest"/>
+        </classes>
+    </test>
+    <test name="BookingE2ETests">
+        <classes>
+            <class name="com.restfulbooker.automation.tests.BookingE2ETest"/>
+        </classes>
+    </test>
+</suite>
