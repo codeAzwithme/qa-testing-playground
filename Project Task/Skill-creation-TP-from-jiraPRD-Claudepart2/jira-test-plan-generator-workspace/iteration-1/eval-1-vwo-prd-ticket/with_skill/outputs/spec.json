@@ -1,0 +1,177 @@
+{
+  "jira_key": "TES-1",
+  "product_short": "VWO",
+  "product_full": "VWO – Digital Experience Optimization Platform",
+  "author": null,
+
+  "objective": {
+    "paragraphs": [
+      "The goal of this test plan is to ensure the quality, functionality, and reliability of VWO – Digital Experience Optimization Platform (https://app.vwo.com/), as described in the requirement recorded in Jira issue TES-1 (PRD).",
+      "VWO (Visual Website Optimizer) is an enterprise-grade Digital Experience Optimization (DXO) and Conversion Rate Optimization (CRO) platform that enables businesses to understand user behavior, test experiences, personalize interactions, and make data-driven decisions to improve conversion outcomes across web and mobile digital properties.",
+      "The requirement states these business objectives: improve conversion rates across key user funnels (for example sign-ups, purchases, lead forms); enable teams to test hypotheses and validate UX changes with empirical data rather than assumptions; reduce engineering dependency for experimentation and optimization workflows; and provide unified insights across testing, personalization and analytics.",
+      "The requirement defines these core features and capabilities:"
+    ],
+    "bullets": [
+      "Experimentation & Testing (VWO Testing)",
+      "Behavioral Insights (VWO Insights)",
+      "Personalization (VWO Personalize)",
+      "Program & Workflow Management (VWO Plan)",
+      "Integrations"
+    ]
+  },
+
+  "scope": [
+    {
+      "title": "Functional Testing",
+      "points": [
+        "Verify the nine functional requirements FR1 to FR9 listed in the requirement: A/B, Split & Multivariate Testing (FR1); SmartStats Engine (FR2); Visual & Code Editor (FR3); Heatmaps & Session Recordings (FR4); Audience Targeting (FR5); Real-time Reporting & Dashboards (FR6); Personalization Engine (FR7); Integration Connectors (FR8); Collaboration & Workflow Management (FR9).",
+        "Verify the two user flows in the requirement: Setting Up an A/B Test and Analyzing Behavioral Data.",
+        "Test coverage follows the priorities given in the requirement: Must (FR1, FR2, FR3, FR4, FR6), High (FR5, FR7, FR8) and Medium (FR9)."
+      ]
+    },
+    {
+      "title": "Performance Testing",
+      "points": [
+        "Verify that the system responds within 2 seconds for editing workflows (Non-Functional Requirement: Performance)."
+      ]
+    },
+    {
+      "title": "Security Testing",
+      "points": [
+        "Verify 2FA, role-based access control and activity logs (Non-Functional Requirement: Security)."
+      ]
+    },
+    {
+      "title": "Scalability Testing",
+      "points": [
+        "Verify that the system supports high visitor volumes without performance loss (Non-Functional Requirement: Scalability).",
+        "Visitor volume to be tested: Insufficient information to determine."
+      ]
+    },
+    {
+      "title": "Data Privacy Testing",
+      "points": [
+        "Verify compliance with GDPR, CCPA, and regional data policies (Non-Functional Requirement: Data Privacy).",
+        "Which regional data policies apply: Insufficient information to determine."
+      ]
+    },
+    {
+      "title": "Reliability Testing",
+      "points": [
+        "Verify the 99.9% uptime SLA for enterprise customers (Non-Functional Requirement: Reliability)."
+      ]
+    }
+  ],
+
+  "inclusions": [
+    {
+      "title": "Experimentation & Testing (FR1, FR2, FR3)",
+      "points": [
+        "FR1 (Must): Verify that users can define and execute A/B, Split URL and Multivariate experiments with multiple variations.",
+        "FR2 (Must): Verify that the SmartStats engine provides Bayesian analysis for test results, and that results are statistically validated and actionable reports are generated.",
+        "FR3 (Must): Verify that experiments can be set up with both the WYSIWYG (visual) editor and the developer-level (code) editor.",
+        "Verify custom goals and metric configurations aligned with business KPIs.",
+        "Verify version previews, cross-device/cross-browser QA, scheduling and reporting, as listed for VWO Testing in the requirement.",
+        "Verify integration with analytics tools (Google Analytics, Mixpanel) for extended insights."
+      ]
+    },
+    {
+      "title": "Behavioral Insights (FR4)",
+      "points": [
+        "FR4 (Must): Verify that heatmaps (click, scroll, focus) and session recordings capture user interactions.",
+        "Verify on-page surveys and feedback, and funnel analytics that identify drop-off points."
+      ]
+    },
+    {
+      "title": "Audience Targeting (FR5)",
+      "points": [
+        "FR5 (High): Verify that audience segmentation based on behaviors can be enabled.",
+        "Verify audience targeting based on behaviors and attributes."
+      ]
+    },
+    {
+      "title": "Real-time Reporting & Dashboards (FR6)",
+      "points": [
+        "FR6 (Must): Verify that real-time reporting and dashboards deliver up-to-date experiment analytics."
+      ]
+    },
+    {
+      "title": "Personalization (FR7)",
+      "points": [
+        "FR7 (High): Verify that tailored experiences are delivered to segments.",
+        "Verify that users can be segmented by geography, behavior and demographics, and that customized content is delivered in real time."
+      ]
+    },
+    {
+      "title": "Integration Connectors (FR8)",
+      "points": [
+        "FR8 (High): Verify that data syncs with external platforms.",
+        "Integrations named in the requirement: Shopify, Salesforce, Segment, Snowflake, WordPress, Drupal, CDPs and analytics systems, and tracking and reporting tools."
+      ]
+    },
+    {
+      "title": "Collaboration & Workflow Management (FR9)",
+      "points": [
+        "FR9 (Medium): Verify the tools for planning and team tasks: a central planning interface, collaboration tools for distributed teams, and Kanban-style workflows for experiment backlogs."
+      ]
+    },
+    {
+      "title": "User Flow: Setting Up an A/B Test",
+      "points": [
+        "Verify the flow end to end: define hypothesis and target metrics; select audience segment parameters; configure test variations (via visual or code editor); launch test and monitor progress; review SmartStats results and conclude winner."
+      ]
+    },
+    {
+      "title": "User Flow: Analyzing Behavioral Data",
+      "points": [
+        "Verify the flow end to end: access the VWO Insights dashboard; generate heatmaps, record sessions, set funnels; correlate behavior insights with test outcomes; prioritize optimization ideas."
+      ]
+    },
+    {
+      "title": "Non-Functional Requirements",
+      "points": [
+        "Performance: system responds within 2 seconds for editing workflows.",
+        "Security: 2FA, role-based access control, activity logs.",
+        "Scalability: support high visitor volumes without performance loss.",
+        "Data Privacy: compliance with GDPR, CCPA, and regional data policies.",
+        "Reliability: 99.9% uptime SLA for enterprise customers."
+      ]
+    }
+  ],
+
+  "environments": {
+    "rows": [
+      { "name": null, "url": "https://app.vwo.com/" }
+    ],
+    "platforms": []
+  },
+
+  "defect": { "rows": [], "tool": null },
+
+  "schedule": {
+    "dates": {
+      "test_plan": null,
+      "test_case_creation": null,
+      "test_case_execution": null,
+      "summary_reports": null
+    },
+    "duration": null
+  },
+
+  "deliverables": {
+    "dates": {
+      "test_plan": null,
+      "functional_test_cases": null,
+      "defect_reports": null,
+      "summary_reports": null
+    }
+  },
+
+  "tools": [],
+
+  "risks": [
+    { "risk": "Technical Complexity", "mitigation": "Provide robust SDKs and documentation, pre-built templates." },
+    { "risk": "Data Accuracy Challenges", "mitigation": "Use SmartStats and cross-tool validation integrations." },
+    { "risk": "User Adoption", "mitigation": "Onboard with guided tours, in-app support, analyst assistance." }
+  ]
+}

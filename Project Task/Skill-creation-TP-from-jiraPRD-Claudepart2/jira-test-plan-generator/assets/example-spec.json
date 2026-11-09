@@ -1,0 +1,88 @@
+{
+  "_note": "FICTIONAL EXAMPLE. Shows the shape of a spec and which Jira statements map to which field. The product, key, IDs and numbers are invented for illustration. Never reuse this wording for a real ticket.",
+  "jira_key": "LOY-7",
+  "product_short": "Acme Loyalty Points",
+  "product_full": "Acme Loyalty Points service",
+
+  "objective": {
+    "paragraphs": [
+      "The goal of this test plan is to ensure the quality, functionality, and reliability of the Acme Loyalty Points service (https://loyalty.example.com/), as described in the requirement recorded in Jira issue LOY-7.",
+      "The requirement states that customers earn points on purchases and redeem them at checkout.",
+      "The requirement defines these capabilities:"
+    ],
+    "bullets": ["Earning points", "Redeeming points", "Points balance view"]
+  },
+
+  "scope": [
+    {
+      "title": "Functional Testing",
+      "points": [
+        "Verify requirements LOY-R1 to LOY-R3: earn points (LOY-R1), redeem points (LOY-R2), view balance (LOY-R3).",
+        "Test coverage follows the priorities given in the requirement: High (LOY-R1, LOY-R2) and Medium (LOY-R3)."
+      ]
+    },
+    {
+      "title": "Performance Testing",
+      "points": [
+        "Verify that the points balance loads within 3 seconds (Non-Functional Requirement: Performance).",
+        "Number of concurrent users: Insufficient information to determine."
+      ]
+    }
+  ],
+
+  "inclusions": [
+    {
+      "title": "Earning points (LOY-R1)",
+      "points": [
+        "LOY-R1 (High): Verify that a completed purchase adds points to the customer's balance.",
+        "Points per currency unit: Insufficient information to determine."
+      ]
+    },
+    {
+      "title": "Redeeming points (LOY-R2)",
+      "points": ["LOY-R2 (High): Verify that points can be applied at checkout to reduce the order total."]
+    },
+    {
+      "title": "Points balance view (LOY-R3)",
+      "points": ["LOY-R3 (Medium): Verify that the customer can see the current points balance."]
+    }
+  ],
+
+  "environments": {
+    "rows": [
+      { "name": "Staging", "url": "https://staging.loyalty.example.com/" }
+    ],
+    "platforms": ["Windows 11 – Edge and Chrome"]
+  },
+
+  "defect": {
+    "rows": [{ "process": "Backend", "poc": "A. Rivera" }],
+    "tool": "Jira project LOY"
+  },
+
+  "schedule": {
+    "dates": {
+      "test_plan": "2026-03-02 to 2026-03-04",
+      "test_case_creation": "2026-03-05 to 2026-03-10",
+      "test_case_execution": "2026-03-11 to 2026-03-20",
+      "summary_reports": "2026-03-23"
+    },
+    "duration": "2 Sprints to Test the Application"
+  },
+
+  "deliverables": {
+    "dates": {
+      "test_plan": "2026-03-04",
+      "functional_test_cases": "2026-03-10",
+      "defect_reports": null,
+      "summary_reports": "2026-03-23"
+    }
+  },
+
+  "tools": ["Postman", "Jira"],
+
+  "risks": [
+    { "risk": "Points calculation depends on a third-party pricing feed", "mitigation": "Use a stubbed feed in the test environment." },
+    { "risk": "Redemption rules may change late in the sprint" }
+  ]
+}

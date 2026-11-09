@@ -1,0 +1,32 @@
+{
+  "jira_key": "SHOP-12",
+  "product_short": "Promo code field at checkout",
+  "product_full": "Promo code field at checkout",
+  "objective": {
+    "paragraphs": [
+      "The goal of this test plan is to ensure the quality, functionality, and reliability of the promo code field at checkout, as described in the requirement recorded in Jira issue SHOP-12.",
+      "The requirement is written as a user story: as a shopper I want to enter a promo code on the checkout page so that I get a discount."
+    ]
+  },
+  "scope": [
+    {
+      "title": "Functional Testing",
+      "points": [
+        "Verify the promo code behaviour described in SHOP-12 (Priority: High): the Promo code text field and Apply button on the checkout page, a valid code, and an invalid code."
+      ]
+    }
+  ],
+  "inclusions": [
+    {
+      "title": "Promo code at checkout (SHOP-12, Priority: High)",
+      "points": [
+        "Verify that the checkout page has a \"Promo code\" text field and an \"Apply\" button.",
+        "Verify that a valid code reduces the order total by the code's discount.",
+        "Verify that an invalid code shows an error message. Error message text: Insufficient information to determine."
+      ]
+    }
+  ],
+  "schedule": {
+    "duration": "Jira due date for SHOP-12: 2026-12-15. Duration to test the application: Insufficient information to determine."
+  }
+}

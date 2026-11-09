@@ -1,0 +1,26 @@
+{
+  "skill_name": "jira-test-plan-generator",
+  "evals": [
+    {
+      "id": 1,
+      "name": "vwo-prd-ticket",
+      "prompt": "Create the test plan for TES-1 from our Jira. Put the Word file in a test-plans folder.",
+      "expected_output": "A .docx in the template's section order built from the VWO PRD in TES-1: FR1-FR9 with priorities, the five non-functional requirements, the product URL, the three PRD risks with mitigations. Environments, platforms, owners, defect tool, test tools, schedule and dates are all 'Insufficient information to determine.' because the ticket has none.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "thin-pasted-ticket",
+      "prompt": "I can't connect Jira right now. Here is the issue text, make the test plan from it: see files/thin-ticket-SHOP-12.txt",
+      "expected_output": "A .docx whose only project-specific content is the SHOP-12 promo code story (field, Apply button, valid code, invalid code, High priority, due date 2026-12-15 placed in the duration line). Every other project-specific cell is 'Insufficient information to determine.' and the error message text is not invented.",
+      "files": ["files/thin-ticket-SHOP-12.txt"]
+    },
+    {
+      "id": 3,
+      "name": "missing-jira-key",
+      "prompt": "test plan for TES-999 please",
+      "expected_output": "No .docx is produced. The reply says TES-999 was not found on the connected site (smtest789.atlassian.net) and asks for the right key or access.",
+      "files": []
+    }
+  ]
+}

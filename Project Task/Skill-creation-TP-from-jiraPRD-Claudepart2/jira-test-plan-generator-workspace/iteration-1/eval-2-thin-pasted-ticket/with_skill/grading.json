@@ -1,0 +1,65 @@
+{
+  "expectations": [
+    {
+      "text": "Heading order and levels match the template (20 headings)",
+      "passed": true,
+      "evidence": "OK: 20 headings match the template order and levels."
+    },
+    {
+      "text": "Four tables with the template column headers (Name/Env url, Defect Process/POC, Task/Dates, Deliverables/Description/Target Completion Date)",
+      "passed": true,
+      "evidence": "4 tables; headers present: true"
+    },
+    {
+      "text": "No leftover content from the template example project",
+      "passed": true,
+      "evidence": "none found"
+    },
+    {
+      "text": "No sections beyond the template (no Assumptions / Open Questions / Traceability)",
+      "passed": true,
+      "evidence": "20 headings, none extra"
+    },
+    {
+      "text": "Fixed template text present verbatim (strategy, entry/exit criteria, approvals)",
+      "passed": true,
+      "evidence": "all present"
+    },
+    {
+      "text": "Story content present: \"Promo code\" field, \"Apply\" button, valid and invalid code",
+      "passed": true,
+      "evidence": "literal checks"
+    },
+    {
+      "text": "Priority High and key SHOP-12 are carried",
+      "passed": true,
+      "evidence": "literal checks"
+    },
+    {
+      "text": "Due date 2026-12-15 appears once, in the duration line, not in a schedule row",
+      "passed": true,
+      "evidence": "1 occurrence(s)"
+    },
+    {
+      "text": "Error message text is not invented",
+      "passed": true,
+      "evidence": "literal check"
+    },
+    {
+      "text": "At least 10 open items (environments, owners, tools, schedule, deliverable dates, risks)",
+      "passed": true,
+      "evidence": "17 occurrences"
+    },
+    {
+      "text": "Tools and Risks sections show the gap, not generic examples",
+      "passed": true,
+      "evidence": "template example risks/tools absent"
+    }
+  ],
+  "summary": {
+    "passed": 11,
+    "failed": 0,
+    "total": 11,
+    "pass_rate": 1
+  }
+}

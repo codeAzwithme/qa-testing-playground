@@ -1,0 +1,70 @@
+{
+  "expectations": [
+    {
+      "text": "Heading order and levels match the template (20 headings)",
+      "passed": true,
+      "evidence": "OK: 20 headings match the template order and levels."
+    },
+    {
+      "text": "Four tables with the template column headers (Name/Env url, Defect Process/POC, Task/Dates, Deliverables/Description/Target Completion Date)",
+      "passed": true,
+      "evidence": "4 tables; headers present: true"
+    },
+    {
+      "text": "No leftover content from the template example project",
+      "passed": true,
+      "evidence": "none found"
+    },
+    {
+      "text": "No sections beyond the template (no Assumptions / Open Questions / Traceability)",
+      "passed": true,
+      "evidence": "20 headings, none extra"
+    },
+    {
+      "text": "Fixed template text present verbatim (strategy, entry/exit criteria, approvals)",
+      "passed": true,
+      "evidence": "all present"
+    },
+    {
+      "text": "All nine requirement IDs FR1-FR9 appear",
+      "passed": true,
+      "evidence": "all present"
+    },
+    {
+      "text": "PRD priorities are carried: Must (FR1, FR2, FR3, FR4, FR6), High (FR5, FR7, FR8), Medium (FR9)",
+      "passed": true,
+      "evidence": "checked literal text"
+    },
+    {
+      "text": "Five non-functional requirements are present (2 s response, 2FA/RBAC, GDPR/CCPA, 99.9% SLA, visitor volume)",
+      "passed": true,
+      "evidence": "all present"
+    },
+    {
+      "text": "Three PRD risks with their mitigations",
+      "passed": true,
+      "evidence": "mitigations with content: 3"
+    },
+    {
+      "text": "Product URL from the ticket is in the Test Environments table",
+      "passed": true,
+      "evidence": "table row checked"
+    },
+    {
+      "text": "No invented dates (no ISO dates anywhere in the plan)",
+      "passed": true,
+      "evidence": "regex for yyyy-mm-dd found none"
+    },
+    {
+      "text": "No invented platform line such as \"Windows 10 - Chrome\"",
+      "passed": true,
+      "evidence": "absent"
+    }
+  ],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "total": 12,
+    "pass_rate": 1
+  }
+}

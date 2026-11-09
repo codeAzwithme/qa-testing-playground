@@ -1,0 +1,112 @@
+{
+  "_comment": "Process text copied from 'Test Plan - Template.docx'. Hard-wrapped template lines are joined into one paragraph. One typo fixed: 'The metrics and metrics' -> 'The metrics'. Run scripts/verify_fixed_text.js after editing.",
+
+  "scope_intro": "Scope of Test Plan for {{product_full}}:",
+  "scope_closing": "It's important to note that the scope of the test plan may evolve during the testing process based on feedback, changing requirements, or discoveries during testing. The scope should be reviewed and adjusted accordingly throughout the testing phase to ensure comprehensive coverage of {{product_full}}.",
+
+  "environments_intro": [
+    "The operating systems and versions that will be used for testing, such as Windows 10, macOS, or Linux.",
+    "The browsers and versions that will be tested, such as Google Chrome, Mozilla Firefox, or Microsoft Edge.",
+    "The device types and screen sizes that will be used for testing, such as desktop computers, laptops, tablets, and smartphones.",
+    "The network connectivity and bandwidth that will be available for testing, such as Wi-Fi, cellular, or wired connections.",
+    "The hardware and software requirements for running the test cases, such as a specific processor, memory, or storage capacity.",
+    "The security protocols and authentication methods that will be used to access the test environment, such as passwords, tokens, or certificates.",
+    "The access permissions and roles of the team members who will be using the test environment, such as testers, developers, or stakeholders."
+  ],
+  "environments_table_header": ["Name", "Env url"],
+
+  "defect_intro": [
+    "The criteria for identifying a defect, such as deviation from the requirements, user experience issues, or technical errors.",
+    "The steps for reporting a defect, such as using a designated template, providing detailed reproduction steps, and attaching screenshots or logs.",
+    "The process for triaging and prioritizing defects, such as assigning severity and priority levels, and assigning them to the appropriate team members for investigation and resolution.",
+    "The tools and systems that will be used for tracking and managing defects, such as a defect tracking software or a project management tool.",
+    "The roles and responsibilities of the team members involved in the defect reporting process, such as testers, developers, and the test lead.",
+    "The communication channels and frequencies for updating stakeholders on the progress and status of defects.",
+    "The metrics that will be used to measure the effectiveness of the defect reporting process, such as the number of defects found, the time taken to resolve them, and the percentage of defects that were successfully fixed."
+  ],
+  "defect_table_header": ["Defect Process", "POC"],
+
+  "strategy": [
+    { "t": "p", "text": "The first step is to create test scenarios and test cases for the various features in Scope." },
+    { "t": "p", "text": "While developing test cases, we'll use a number of test design techniques." },
+    { "t": "sub", "text": "Equivalence Class Partition" },
+    { "t": "sub", "text": "Boundary Value Analysis" },
+    { "t": "sub", "text": "Decision Table Testing" },
+    { "t": "sub", "text": "State Transition Testing" },
+    { "t": "sub", "text": "Use Case Testing" },
+    { "t": "p", "text": "We also use our expertise in creating Test Cases by applying the below:" },
+    { "t": "sub", "text": "Error Guessing" },
+    { "t": "sub", "text": "Exploratory Testing" },
+    { "t": "li", "text": "We prioritize the Test Cases" },
+    { "t": "p", "text": "Step 2: Our testing procedure when we receive a request for testing:" },
+    { "t": "li", "text": "First, we'll conduct smoke testing to see if the various and important functionalities of the application are working." },
+    { "t": "li", "text": "We reject the build, if the Smoke Testing fails and will wait for the stable build before performing in depth testing of the application functionalities." },
+    { "t": "li", "text": "Once we receive a stable build, which passes Smoke Testing, we perform in depth testing using the Test Cases created." },
+    { "t": "li", "text": "Multiple Test Resources will be testing the same Application on Multiple Supported Environments simultaneously." },
+    { "t": "p", "text": "We then report the bugs in bug tracking tool and send dev. management the defect found on that day in a status end of the day email." },
+    { "t": "p", "text": "As part of the Testing, we will perform the below types of Testing:" },
+    { "t": "sub", "text": "Smoke Testing and Sanity Testing" },
+    { "t": "sub", "text": "Regression Testing and Retesting" },
+    { "t": "sub", "text": "Usability Testing, Functionality & UI Testing" },
+    { "t": "li", "text": "We repeat Test Cycles until we get the quality product." },
+    { "t": "p", "text": "Step3 – We will follow the below best practices to make our Testing better:" },
+    { "t": "li", "lead": "Context Driven Testing", "text": " – We will be performing Testing as per the context of the given application." },
+    { "t": "li", "lead": "Shift Left Testing", "text": " – We will start testing from the beginning stages of the development itself, instead of waiting for the stable build." },
+    { "t": "li", "lead": "Exploratory Testing", "text": " – Using our expertise we will perform Exploratory Testing, apart from the normal execution of the Test cases." },
+    { "t": "li", "lead": "End to End Flow Testing", "text": " – We will test the end-to-end scenario which involve multiple functionalities to simulate the end user flows." }
+  ],
+
+  "schedule_intro": [
+    "Following is the test schedule planned for the project –",
+    "Task Time Duration"
+  ],
+  "schedule_table_header": ["Task", "Dates"],
+  "schedule_rows": [
+    { "label": "▪ Creating Test Plan", "key": "test_plan" },
+    { "label": "▪ Test Case Creation", "key": "test_case_creation" },
+    { "label": "▪ Test Case Execution", "key": "test_case_execution" },
+    { "label": "▪ Summary Reports Submission Date", "key": "summary_reports" }
+  ],
+
+  "deliverables_intro": "The following are to be delivered to the client:",
+  "deliverables_table_header": ["Deliverables", "Description", "Target Completion Date"],
+  "deliverables_rows": [
+    { "name": "Test Plan", "description": ["Details on the scope of the Project, test strategy, test schedule, resource requirements, test deliverables and schedule"], "key": "test_plan" },
+    { "name": "Functional Test Cases", "description": ["Test Cases created for the scope defined"], "key": "functional_test_cases" },
+    { "name": "Defect Reports", "description": ["Detailed description of the defects identified along with screenshots and steps to reproduce on a daily basis."], "key": "defect_reports", "default": "NA" },
+    { "name": "Summary Reports", "description": ["Summary Reports –", "Bugs by Bug#,", "Bugs by Functional Area and", "Bugs by Priority"], "key": "summary_reports" }
+  ],
+
+  "criteria_intro": "The below are the entry and exit criteria for every phase of Software Testing Life Cycle:",
+  "criteria_blocks": [
+    { "t": "p", "text": "Requirement Analysis" },
+    { "t": "h4", "text": "Entry Criteria:" },
+    { "t": "li", "text": "Once the testing team receives the Requirements Documents or details about the Project" },
+    { "t": "h4", "text": "Exit Criteria:" },
+    { "t": "li", "text": "List of Requirements are explored and understood by the Testing team" },
+    { "t": "li", "text": "Doubts are cleared" },
+    { "t": "h3", "text": "Test Execution" },
+    { "t": "h4", "text": "Entry Criteria:" },
+    { "t": "li", "text": "Test Scenarios and Test Cases Documents are signed-off by the Client" },
+    { "t": "li", "text": "Application is ready for Testing" },
+    { "t": "h4", "text": "Exit Criteria:" },
+    { "t": "li", "text": "Test Case Reports, Defect Reports are ready" },
+    { "t": "h3", "text": "Test Closure" },
+    { "t": "h4", "text": "Entry Criteria:" },
+    { "t": "li", "text": "Test Case Reports, Defect Reports are ready" },
+    { "t": "h4", "text": "Exit Criteria:" },
+    { "t": "li", "text": "Test Summary Reports" }
+  ],
+
+  "tools_intro": "The following are the list of Tools we will be using in this Project:",
+  "risks_intro": "The following are the list of risks possible and the ways to mitigate them:",
+
+  "approvals": [
+    { "t": "p", "text": "Team will send different types of documents for Client Approval like below:" },
+    { "t": "li", "text": "Test Plan" },
+    { "t": "li", "text": "Test Scenarios" },
+    { "t": "li", "text": "Test Cases" },
+    { "t": "li", "text": "Reports" },
+    { "t": "p", "text": "Testing will only continue to the next steps once these approvals are done" }
+  ]
+}

@@ -1,0 +1,16 @@
+[FICTIONAL TEST FIXTURE - pasted Jira issue text]
+Key: SHOP-12
+Type: Story
+Summary: Promo code field at checkout
+Priority: High
+Due date: 2026-12-15
+Status: To Do
+Description:
+As a shopper I want to enter a promo code on the checkout page so that I get a discount.
+- The checkout page has a "Promo code" text field and an "Apply" button.
+- A valid code reduces the order total by the code's discount.
+- An invalid code shows an error message.
+Comments: none
+Sub-tasks: none
+Linked issues: none
+Attachments: none

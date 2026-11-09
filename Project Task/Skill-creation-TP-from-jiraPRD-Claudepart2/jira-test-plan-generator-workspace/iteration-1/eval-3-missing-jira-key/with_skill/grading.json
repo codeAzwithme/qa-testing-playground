@@ -1,0 +1,20 @@
+{
+  "expectations": [
+    {
+      "text": "No .docx is produced for a key that does not exist",
+      "passed": true,
+      "evidence": "0 docx file(s) in outputs"
+    },
+    {
+      "text": "Response says TES-999 was not found and asks for the right key or access",
+      "passed": true,
+      "evidence": "response.md checked"
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 0,
+    "total": 2,
+    "pass_rate": 1
+  }
+}
