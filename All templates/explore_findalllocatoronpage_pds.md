@@ -1,0 +1,176 @@
+---
+name: explore
+description: Explore a live web page and generate a Playwright TypeScript Page Object Model file containing locators for every meaningful interactive element on the page. Use this skill ANY time the user says "/explore", "explore this URL", "explore the application", "give me the POM for ...", "find locators for ...", "scan this page", or pastes a URL and asks for locators / a page object. Even if the user just shares a URL with a one-liner like "POM this" or "locate everything on this page", trigger this skill. The output is a ready-to-use `.ts` file with a typed Page Object class plus a short locator catalog the user can paste into a test framework.
+---
+
+# explore
+
+## Purpose
+
+Take a URL, open it in a real browser, harvest every meaningful locator (buttons, links, inputs, dropdowns, textareas, radios, checkboxes, headings used for assertions, iframes, etc.), and emit a Playwright TypeScript **Page Object Model** that a tester can drop into a project and start using.
+
+The point is to save the 30–60 minutes a tester normally spends in DevTools hand-picking selectors. We want sensible locator priorities (role/label > test-id > stable href/name > CSS), and we want the file to compile and run with `@playwright/test` out of the box.
+
+## When to trigger
+
+- `/explore <url>` — primary form.
+- "Explore https://example.com and give me a page object."
+- "Find all the locators on this page: <url>"
+- "POM this URL"
+- "Scan https://… and give me the buttons / inputs."
+- User shares a URL and asks for locators, selectors, or a page object — even without the word "explore".
+
+Do **not** trigger for: pure SEO/audit requests (use the `seo` skills), screenshot-only requests (use `playwright-cli`), or "open this URL" without any locator/POM intent.
+
+## What to do
+
+### 1. Resolve the URL
+
+Take the first URL in the user's message. If none is given, ask for one before exploring. Strip trailing punctuation. Add `https://` if the scheme is missing.
+
+### 2. Open the page with the Playwright MCP
+
+Use the bundled Playwright MCP tools the harness exposes. Preferred sequence:
+
+1. `mcp__playwright__browser_navigate` → load the URL.
+2. `mcp__playwright__browser_snapshot` → grab the accessibility tree. This is far more reliable than HTML parsing because it already collapses noise and gives roles + accessible names.
+3. If the page has iframes worth modeling (chat widgets, embedded forms, video players that gate interaction), note them in the catalog and emit a `frameLocator(...)` chain rather than ignoring them.
+
+If the Playwright MCP isn't available in this session, fall back to `playwright-cli` codegen (`npx playwright codegen <url>`) and ask the user to paste the generated selectors — but the MCP path is the default.
+
+### 3. Extract a locator catalog
+
+From the accessibility snapshot, pull every element that a test would realistically interact with **or** assert on. Bucket them:
+
+- **Navigation links** — header, footer, breadcrumbs.
+- **Primary CTAs** — buttons or hero links the user is expected to click.
+- **Forms** — inputs, textareas, selects, radios, checkboxes, submit buttons. Group by form.
+- **Auth controls** — sign in, sign up, logout, OAuth buttons.
+- **Search** — search box + search submit.
+- **Headings used for assertions** — page title, section titles.
+- **Iframes & widgets** — chat, video, third-party embeds.
+- **Skip pure decoration** — images without alt text, spacer divs, marketing-only paragraphs.
+
+For each element record three things: the **role + accessible name**, the **href / value / placeholder** if relevant, and a short slug that becomes the property name in the page object (`signInLink`, `searchBox`, `submitBtn`, etc.).
+
+### 4. Pick the right locator strategy
+
+Order of preference (this is what Playwright itself recommends, and it's what makes tests survive refactors):
+
+1. `getByRole('role', { name: 'Accessible Name' })` — best for buttons, links, headings, textboxes, comboboxes, checkboxes.
+2. `getByLabel('Label text')` — when a form field has a `<label>` wired up.
+3. `getByPlaceholder(...)` / `getByText(...)` — when role+name isn't unique.
+4. `getByTestId(...)` — when the page exposes `data-testid` / `data-test` attributes.
+5. `locator('a[href="/specific-path"]')` — for nav links where the role+name is ambiguous (multiple "Home" links).
+6. CSS selector — last resort. Avoid `nth-child` and brittle class chains.
+
+If a role-based locator would resolve to multiple elements, scope it (`page.locator('header').getByRole('link', { name: 'Home' })`) rather than reaching for `.first()`.
+
+### 5. Emit the Page Object file
+
+Write a `.ts` file in the **current working directory** named `<host-or-slug>.page.ts` (e.g., `courses-thetestingacademy-com.page.ts`). If the cwd is not writable, fall back to `/tmp/`.
+
+Use this exact template:
+
+```typescript
+import { Page, Locator, FrameLocator } from '@playwright/test';
+
+/**
+ * Page Object for __URL__
+ * Generated by /explore on __DATE__
+ */
+export class __ClassName__ {
+  readonly page: Page;
+
+  // ── Navigation ────────────────────────────────────────────────
+  readonly logo: Locator;
+  readonly navHome: Locator;
+  // …one Locator per catalog entry, grouped by bucket
+
+  // ── Primary CTAs ──────────────────────────────────────────────
+  readonly heroCta: Locator;
+
+  // ── Forms ─────────────────────────────────────────────────────
+  readonly searchBox: Locator;
+  readonly searchBtn: Locator;
+
+  // ── Iframes ───────────────────────────────────────────────────
+  readonly chatFrame: FrameLocator;
+  readonly chatButton: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+
+    this.logo      = page.getByRole('link', { name: 'TheTestingAcademy' });
+    this.navHome   = page.getByRole('link', { name: 'HOME', exact: true });
+    this.heroCta   = page.getByRole('link', { name: /Yes, I want to Learn/i }).first();
+    this.searchBox = page.getByRole('textbox', { name: 'Search Course' });
+    this.searchBtn = page.locator('form button').first();
+
+    this.chatFrame  = page.frameLocator('iframe[title*="chat" i]');
+    this.chatButton = this.chatFrame.getByRole('button', { name: 'Chat with Me' });
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto('__URL__');
+  }
+}
+```
+
+Replace the placeholders. Keep groups commented with the same `── Section ──────` style so a tester can scan it. Order locators top-to-bottom in the order they appear on the page.
+
+### 6. Print a compact summary in chat
+
+After the file is written, give the user:
+
+1. **Path** to the generated `.ts` file.
+2. **Locator count** by bucket (e.g., "8 nav, 3 CTAs, 1 form with 2 fields, 2 iframes").
+3. **Caveats** worth flagging: console errors observed, iframes that need separate handling, ambiguous role+name pairs that fell back to CSS, dynamic IDs that may rot.
+4. **Suggested next step** — a one-liner test the user can paste, e.g.:
+   ```ts
+   import { test, expect } from '@playwright/test';
+   import { CoursesPage } from './courses-thetestingacademy-com.page';
+
+   test('home loads and shows courses heading', async ({ page }) => {
+     const home = new CoursesPage(page);
+     await home.goto();
+     await expect(page.getByRole('heading', { name: 'All Courses' })).toBeVisible();
+   });
+   ```
+
+Keep the summary short — under ~12 lines. The file itself is the deliverable; the chat message is a receipt.
+
+## Reasoning notes
+
+- **Why role+name first?** It mirrors what a screen reader sees and survives CSS class refactors. CSS class chains break the moment a designer touches the markup; role+name only breaks if the page changes meaning.
+- **Why a class, not loose functions?** Page objects are the standard Playwright pattern. Testers expect `new HomePage(page)` and IDE autocomplete on `home.searchBox`. A flat list of selectors fights the muscle memory of every Playwright user.
+- **Why generate in cwd?** Testers usually run `/explore` from inside the repo where the file should live. Falling back to `/tmp/` for the rare read-only cwd is safer than refusing to write.
+- **Why skip decorative elements?** A POM with 200 locators nobody uses is worse than one with 25 that map to real test actions — it just slows down autocomplete and rots faster.
+
+## Examples
+
+**Example 1**
+Input: `/explore https://www.saucedemo.com/`
+Action: Open the page, find username/password/login button, write `www-saucedemo-com.page.ts` with `usernameInput`, `passwordInput`, `loginBtn`, `errorMessage`. Summary: "1 form, 3 fields, 1 known error locator."
+
+**Example 2**
+Input: "explore https://sdet.live and give me the page object"
+Action: Follow the redirect to the resolved URL, harvest header nav, hero CTA, course cards, footer, chat iframe. Write `<resolved-host>.page.ts`. Flag the iframes in the summary.
+
+**Example 3**
+Input: "POM this: https://demoqa.com/automation-practice-form"
+Action: Recognize the form-heavy page, group locators under a `Form fields` section with `firstNameInput`, `lastNameInput`, `emailInput`, `genderRadio(label)` helper, `submitBtn`. Emit a tiny example test that fills the form.
+
+## Edge cases
+
+- **Login walls / auth-gated pages**: explore as far as anonymous access allows, then flag in the summary that the rest needs credentials and offer to retry with stored auth state.
+- **Single-page apps that need interaction to reveal content**: do a snapshot, then if obvious nav buttons exist, click the most relevant one (e.g., "Courses") and snapshot again. Combine locators across both views.
+- **Pages with hundreds of repeated cards**: emit one locator that targets the card container (`courseCards = page.locator('.course-card')`) and a helper method `courseByName(name: string)` rather than enumerating every card.
+- **404 / network errors**: don't write the file. Tell the user what happened and ask if they want to retry.
+- **CAPTCHA or bot-detection blocks**: stop, report it. Don't try to bypass.
+
+## What this skill is not
+
+- It does not write full test cases beyond a 5-line smoke example.
+- It does not pick assertion values (text content, counts) for the user — testers know their own business rules.
+- It does not run the generated POM. The user runs it inside their own Playwright project.
